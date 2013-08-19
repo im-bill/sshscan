@@ -1,0 +1,4 @@
+可能需要安装libssh2库：
+sudo apt-get install libssh2-1-dev
+
+
