@@ -118,12 +118,12 @@ void *try_login_pwd(void *arg)
     
    	for (i = 1; i <= parg->lastLevArg->setting->connect_test_count; ++i)
     	{
-        	if (connect(sockfd, (struct sockaddr *)(&address), sizeof(address)) == 0)
-        	{
-		  flag_connect_success = 1;
-		  break;            
-        	}     
-		sleep(2);
+            if (connect(sockfd, (struct sockaddr *)(&address), sizeof(address)) == 0)
+            {
+	        flag_connect_success = 1;
+		break;            
+            }     
+	    sleep(2);
     	}
 
 	if (flag_connect_success == 0)
@@ -153,37 +153,35 @@ void *try_login_pwd(void *arg)
         else 
         {
             printf("\tAuthentication by password succeeded.IP:%s:%d Username:%s Password[%d/%d]:%s \n",
-                parg->lastLevArg->ip, parg->lastLevArg->port ,parg->lastLevArg->user, j, parg->lastLevArg->setting->per_pwd_num, ppass->password );
-        	libssh2_session_disconnect(session,
+            parg->lastLevArg->ip, parg->lastLevArg->port ,parg->lastLevArg->user, j, parg->lastLevArg->setting->per_pwd_num, ppass->password );
+            libssh2_session_disconnect(session,
                    "Normal Shutdown, Thank you for playing");
-  		    libssh2_session_free(session);
- 		    close(sockfd);
+  	    libssh2_session_free(session);
+ 	    close(sockfd);
  		    
- 		    pthread_mutex_lock(&(parg->lastLevArg->setting->success_log_mutex));
- 		    if ((fp = fopen(parg->lastLevArg->setting->path_log, "a")) == NULL)
- 		    {
- 		         pthread_mutex_unlock(&(parg->lastLevArg->setting->success_log_mutex));
- 		         parg->ret = -2;
- 		         return NULL;
- 		    }
+ 	    pthread_mutex_lock(&(parg->lastLevArg->setting->success_log_mutex));
+ 	    if ((fp = fopen(parg->lastLevArg->setting->path_log, "a")) == NULL)
+ 	    {
+ 	         pthread_mutex_unlock(&(parg->lastLevArg->setting->success_log_mutex));
+ 	         parg->ret = -2;
+ 	         return NULL;
+ 	    }
 
- 		    fprintf(fp, "%s:%d  User:%s  Password:%s  \n",  parg->lastLevArg->ip, parg->lastLevArg->port ,parg->lastLevArg->user, ppass->password);
- 		    fclose(fp);
- 		    pthread_mutex_unlock(&(parg->lastLevArg->setting->success_log_mutex));
+	    fprintf(fp, "%s:%d  User:%s  Password:%s  \n",  parg->lastLevArg->ip, parg->lastLevArg->port ,parg->lastLevArg->user, ppass->password);
+	    fclose(fp);
+	    pthread_mutex_unlock(&(parg->lastLevArg->setting->success_log_mutex));
 
             pthread_mutex_lock(&(parg->lastLevArg->complete_mutex));
             parg->lastLevArg->complete = 1;
             pthread_mutex_unlock(&(parg->lastLevArg->complete_mutex));
 	    return NULL;
-            
-			break;
         }
-		libssh2_session_disconnect(session,
+	libssh2_session_disconnect(session,
                    "Normal Shutdown, Thank you for playing");
-  		libssh2_session_free(session);
- 		close(sockfd); 
+  	libssh2_session_free(session);
+ 	close(sockfd); 
         j++;
-		/*sleep(2);*/
+	/*sleep(2);*/
     }
     parg->ret = 0;
     return NULL;
@@ -434,20 +432,20 @@ int checkSetting(int argc, char **argv, Setting *setting)
             case 't':
                 setting->port = atoi(optarg);/*端口*/
 				break;
-			case 'T':
-				setting->thread_num = atoi(optarg);
-				break;
-			case 'N' :
-				setting->pwd_group_num = atoi(optarg);
-				break;
-			case 'D': /*日志路径*/
-			    memset(setting->path_log, 0, MAX_LEN_PATH);
-			    strncpy(setting->path_log, optarg, MAX_LEN_PATH - 1);
-			    break;
+	    case 'T':
+		setting->thread_num = atoi(optarg);
+		break;
+	    case 'N' :
+		setting->pwd_group_num = atoi(optarg);
+		break;
+	    case 'D': /*日志路径*/
+	        memset(setting->path_log, 0, MAX_LEN_PATH);
+	        strncpy(setting->path_log, optarg, MAX_LEN_PATH - 1);
+	        break;
             default:
                 fprintf(stderr, "Unknown error processing command-line options.\n");
                 ret = -1;
-				break;
+		break;
         }
     }
 
