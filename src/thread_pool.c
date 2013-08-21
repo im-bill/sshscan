@@ -1,4 +1,3 @@
-
 /*
  *	Power BY Bill Lonely
  */
@@ -48,7 +47,7 @@ int pool_init(int max_thread_num)
 
     for (i = 0; i < max_thread_num; ++i)
     {
-		pool->thread_unite_list[i].state = READY;
+	pool->thread_unite_list[i].state = READY;
         if (pthread_create(&(pool->thread_unite_list[i].thread_id), NULL, thread_routine, &pool->thread_unite_list[i]) != 0)
         {            
             pthread_mutex_destroy(&(pool->queue_lock));
@@ -64,9 +63,9 @@ int pool_init(int max_thread_num)
 /*线程运行函数*/
 void *thread_routine(void *arg)
 {
-	ThreadUnit *parg = (ThreadUnit *)arg;
-	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
-	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+    ThreadUnit *parg = (ThreadUnit *)arg;
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
 	
     printf("starting thread 0X%x \n", (unsigned int)pthread_self());
     while(1)
