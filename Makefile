@@ -1,3 +1,4 @@
+# Power BY Bill Lonely
 all:
 	cd src;make
 clean:
