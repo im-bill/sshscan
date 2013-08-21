@@ -56,11 +56,11 @@ int main(int argc, char **argv)
     struct  workarg_queue *record_node = NULL;
 
 
-	if (strcmp(argv[1],"-help") == 0)
-	{
-		show_help();
-		return 0;
-	}
+    if (strcmp(argv[1],"-help") == 0)
+    {
+	show_help();
+	return 0;
+    }
     if (checkSetting(argc, argv, &setting) < 0)
     {
         fprintf(stderr, "Options Error \n");
@@ -80,21 +80,21 @@ int main(int argc, char **argv)
         return -1;
     }
 	
-	if (pool_init(setting.thread_num) < 0)
-	{
-		free_ip_list(&IP_List);
+    if (pool_init(setting.thread_num) < 0)
+    {
+	free_ip_list(&IP_List);
         free_user_list(&User_List);
         free_password_list(&Pwd_List);
         free_setting(&setting);
 		fprintf(stderr,"Init thread pool error!!\n");
 		return -2;
-	}	
+    }	
 		
-	/*信号*/
-	(void)signal(SIGINT, ouch);
-	/*初始化libssh2库*/
-	gcrypt_fix();
-	rc = libssh2_init (0);
+    /*信号*/
+    (void)signal(SIGINT, ouch);
+    /*初始化libssh2库*/
+    gcrypt_fix();
+    rc = libssh2_init (0);
     if (rc != 0) {
         free_ip_list(&IP_List);
         free_user_list(&User_List);
