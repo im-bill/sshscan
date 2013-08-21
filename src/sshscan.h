@@ -25,10 +25,10 @@
 #define MAX_LEN_PATH    2048
 typedef  struct _Setting
 {
-	char *Host_IP;
-	char *Host_File;
-	char *Username;
-	char *User_File;
+    char *Host_IP;
+    char *Host_File;
+    char *Username;
+    char *User_File;
     char *Password;
     char *Password_File;
     short port;
@@ -92,14 +92,14 @@ struct Test_ssh_Arg_by_IP
 /*Level 2*/
 struct Try_login_arg_by_user
 {
-  char *ip;
-  char *user;
-  short port;
-  struct password_list *passwords;
-  int complete;
-  pthread_mutex_t complete_mutex;  /*在free过程中记得要destroy掉*/
-  int ret;
-  Setting *setting;
+    char *ip;
+    char *user;
+    short port;
+    struct password_list *passwords;
+    int complete;
+    pthread_mutex_t complete_mutex;  /*在free过程中记得要destroy掉*/
+    int ret;
+    Setting *setting;
 };
 
 /*Level 3*/
